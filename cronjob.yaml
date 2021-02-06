@@ -1,0 +1,60 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: trakt-tv-exporter
+spec:
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - env:
+            - name: TRAKT_CLIENT_ID
+              value: ''
+            - name: TRAKT_CLIENT_SECRET
+              value: ''
+            - name: TRAKT_OAUTH_CODE
+              value: ''
+            - name: TMDB_API_KEY
+              value: ''
+            - name: TMDB_IMAGE_BASE
+              value: ''
+            - name: INFLUXDB_HOST
+              value: ''
+            - name: INFLUXDB_PORT
+              value: ''
+            - name: INFLUXDB_USERNAME
+              value: ''
+            - name: INFLUXDB_PASSWORD
+              value: ''
+            - name: INFLUXDB_DATABASE
+              value: ''
+            image: alexxanddr/trakt-tv-exporter:latest
+            imagePullPolicy: Always
+            name: trakt-tv-exporter
+            volumeMounts:
+            - name: trakt-api-secret
+              readOnly: false
+              mountPath: "/code/.trakt.json"
+              subPath: ".trakt.json"
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: OnFailure
+          volumes:
+          - name: trakt-api-secret
+            secret:
+              secretName: trakt-api-secret
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+  schedule: 50 23 * * *
+  successfulJobsHistoryLimit: 3
+  suspend: false
