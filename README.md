@@ -4,6 +4,11 @@ This is a fork of fitbit project from repository: https://github.com/c99koder/pe
 
 The python script collect trakt information from API rest and push the data into the influxDB.
 
+## Build Command:
+```
+docker buildx build --push --tag alexxanddr/trakt-tv-exporter:latest --platform linux/amd64,linux/arm/v7,linux/arm64/v8  .
+```
+
 I add the variables for the configuration as environment variable in cronjob.yaml:
 
 * TRAKT_CLIENT_ID

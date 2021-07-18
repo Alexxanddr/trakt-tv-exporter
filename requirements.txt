@@ -1,0 +1,7 @@
+pytz
+influxdb
+requests
+requests-cache
+instaloader
+publicsuffix2
+trakt.py
