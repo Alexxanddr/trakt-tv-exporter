@@ -28,3 +28,4 @@ The cronjob.yaml is scheduled with cron rule:
 
 0 1-23/2 * * *
 
+
